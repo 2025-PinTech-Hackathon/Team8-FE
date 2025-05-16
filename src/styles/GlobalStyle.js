@@ -1,34 +1,25 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-  * {
+  *, *::before, *::after {
     box-sizing: border-box;
   }
 
-  html, body, #root {
-  overflow: hidden;
+  html, body {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
-    background-color: white;
+    min-height: 100%;
     font-family: 'Pretendard', sans-serif;
+    background-color: #EBEBEB;
   }
 
-  body {
+  /* root 렌더링 요소는 flex-center 만 */
+  #root {
     display: flex;
     justify-content: center;
-  }
-
-  #root {
-    max-width: 393px;     
     width: 100%;
-    min-height: 100%;
-    background-color: #FBF3E7;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
-
-
 `;
 
 export default GlobalStyle;
