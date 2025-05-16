@@ -14,22 +14,7 @@ export const Title = styled.h1`
   flex: 1;
   margin-top: -2rem;
   text-align: center;
-`;
-
-export const PublisherRow = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.75rem;
-`;
-
-export const PublisherName = styled.span`
-  font-size: 0.875rem; /* 14px */
-`;
-
-export const Meta = styled.div`
-  font-size: 0.75rem; /* 12px */
-  color: #b2b2b2;
-  margin-bottom: 1rem; /* 16px */
+  margin-bottom: 2rem;
 `;
 
 export const Content = styled.div`
@@ -40,7 +25,7 @@ export const Content = styled.div`
   font-size: 0.875rem;
   line-height: 1.6;
   margin-bottom: 2rem;
-  max-height: calc(100vh - 18rem); /* 제목/메타/버튼 영역 높이를 뺀 값 */
+  max-height: calc(100vh - 14rem); /* 제목/메타/버튼 영역 높이를 뺀 값 */
   overflow-y: auto;
 `;
 
