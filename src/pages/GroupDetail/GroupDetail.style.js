@@ -59,9 +59,6 @@ export const InviteButton = styled.button`
   cursor: pointer;
 `;
 
-// ✅ 삭제됨
-// export const GoalAmount = styled.span` ... `
-
 export const ProgressWrapper = styled.div`
   margin: 0.75rem 0;
 `;
@@ -73,10 +70,7 @@ export const ProgressBar = styled.div`
   overflow: hidden;
 `;
 
-export const ProgressFill =
-  styled.div <
-  { progress: number } >
-  `
+export const ProgressFill = styled.div`
   height: 100%;
   width: ${({ progress }) => progress}%;
   background: #8b6243;
@@ -115,10 +109,7 @@ export const FriendProgress = styled.div`
   overflow: hidden;
 `;
 
-export const FriendFill =
-  styled.div <
-  { progress: number } >
-  `
+export const FriendFill = styled.div`
   height: 100%;
   width: ${({ progress }) => progress}%;
   background: #8b6243;
