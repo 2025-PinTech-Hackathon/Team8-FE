@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
   #root {
     max-width: 393px;     
     width: 100%;
-    background-color: #fffaf5;
+    background-color: #FBF3E7;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
 
