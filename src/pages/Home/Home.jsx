@@ -4,6 +4,7 @@ import HomeHeader from '../Home/components/HomeHeader/HomeHeader.jsx';
 import TabData from '../Home/components/TabData/TabData.jsx';
 import Finlist from '../Home/components/Finlist/Finlist.jsx';
 import ChallengeList from '../Home/components/Challengelist/Challengelist.jsx';
+import InputCodeModal from '../../assets/CommonComponents/InputCodeModal/InputCodeModal';
 
 function Home() {
   //api 연결시
@@ -13,9 +14,16 @@ function Home() {
   const [selectedTab, setSelectedTab] = useState('정보');
   const [selectedCategory, setSelectedCategory] = useState('');
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <S.Container>
-      {/* 상단 인삿말 + 탭 */}
+      {isModalOpen && (
+        <InputCodeModal
+          onSubmit={() => setIsModalOpen(false)}
+          onSkip={() => setIsModalOpen(false)}
+        />
+      )}
       <HomeHeader
         name={userName}
         selectedTab={selectedTab}
@@ -23,6 +31,7 @@ function Home() {
           setSelectedTab(tab);
           setSelectedCategory('');
         }}
+        onInviteClick={() => setIsModalOpen(true)}
       />
 
       <TabData

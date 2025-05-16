@@ -48,7 +48,25 @@ export const TabButton = styled.button`
   background: none;
   z-index: 1;
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: bold;
   color: ${({ active }) => (active ? '#A2845E' : '#000')};
   cursor: pointer;
+`;
+
+export const TopRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const InviteButton = styled.button`
+  background-color: #8b6243;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  font-weight: bold;
+  border-radius: 20px;
+  font-size: 0.67rem;
+  cursor: pointer;
+  margin-top: 1.8rem;
 `;

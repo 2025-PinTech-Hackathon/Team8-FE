@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3rem 1rem;
+  padding: 4rem 1rem;
 `;
 
 export const AvatarWrapper = styled.div`
@@ -15,7 +15,7 @@ export const AvatarWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 `;
 
 export const AvatarIcon = styled.div`
@@ -29,7 +29,7 @@ export const Card = styled.div`
   width: 100%;
   max-width: 300px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-  margin-bottom: 5rem;
+  margin-bottom: 9rem;
 `;
 
 export const UserName = styled.div`
@@ -70,9 +70,9 @@ export const LogoutButton = styled.button`
   background-color: #8b6243;
   color: white;
   border: none;
-  border-radius: 10px;
-  padding: 10px 40px;
+  border-radius: 15px;
+  padding: 0.8rem 3rem;
   font-weight: bold;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   cursor: pointer;
 `;

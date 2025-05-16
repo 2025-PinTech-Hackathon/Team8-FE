@@ -14,7 +14,7 @@ const ChallengeList = ({ category }) => {
             도전해보세요 💪
           </S.Description>
           <S.ButtonWrapper>
-            <S.DetailButton>{category ? category : '자세히'}</S.DetailButton>
+            <S.DetailButton>{category ? category : ''}</S.DetailButton>
           </S.ButtonWrapper>
         </S.Card>
       ))}
