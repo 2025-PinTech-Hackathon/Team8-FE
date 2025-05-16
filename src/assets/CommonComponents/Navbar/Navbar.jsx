@@ -1,4 +1,4 @@
-import { BookText, Trophy, User } from "lucide-react";
+import { Book, BookText, Trophy, User } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { NavbarContainer, NavbarItem } from "./Navbar.style";
 
@@ -14,7 +14,11 @@ const Navbar = () => {
   const navItems = [
     {
       name: "feed",
-      icon: <BookText />,
+      icon: (
+        <span style={{ margin: "0 0.5rem" }}>
+          <BookText />
+        </span>
+      ),
       path: "/home",
       text: "피드",
     },

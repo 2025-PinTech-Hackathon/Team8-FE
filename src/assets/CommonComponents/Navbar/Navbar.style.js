@@ -7,10 +7,12 @@ export const NavbarContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   background-color: #ffffff;
+  opacity: 0.95;
   position: fixed;
   bottom: 0;
   width: 100%;
   height: 3.5rem;
+  border-top: 1px solid #eaeaea;
 `;
 
 export const NavbarItem = styled.div`
