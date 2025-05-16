@@ -13,17 +13,16 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Header>
-        <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/home/:finId" element={<FinDetail />} />
-          <Route path="/home/:challengeId" element={<ChallengeDetail />} />
-          <Route path="/home/:challengeId/:groupId" element={<GroupDetail />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/challenge" element={<Challenge />} />
-        </Routes>
-      </Header>
+      <Header />
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/home/:finId" element={<FinDetail />} />
+        <Route path="/home/:challengeId" element={<ChallengeDetail />} />
+        <Route path="/home/:challengeId/:groupId" element={<GroupDetail />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/challenge" element={<Challenge />} />
+      </Routes>
     </>
   );
 }
