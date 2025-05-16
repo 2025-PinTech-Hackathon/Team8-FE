@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Logo from '../../images/fintoriLogo.svg';
-import Arrow from '../../images/arrow.svg';
+import Logo from '../../Images/fintoriLogo.svg';
+import Arrow from '../../Images/arrow.svg';
 import * as S from '../Header/Header.style';
 
 function Header({}) {
