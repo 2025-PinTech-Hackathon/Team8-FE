@@ -1,12 +1,14 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Logo from '../../images/Logo.svg';
+import Logo from '../../images/fintoriLogo.svg';
 import Arrow from '../../images/arrow.svg';
 import * as S from '../Header/Header.style';
 
 function Header({}) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  if (pathname === '/') return null;
 
   console.log('pathname:', pathname);
   const isDetailPage = pathname.startsWith('/home/') && pathname !== '/home';
