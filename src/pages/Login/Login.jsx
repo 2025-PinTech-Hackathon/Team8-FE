@@ -1,7 +1,7 @@
 import * as S from '../Login/Login.style';
 import Logo from '../../assets/Images/FinTori.svg';
 import { useAuth } from 'react-oidc-context';
-
+import Loading from '../../assets/CommonComponents/Loading/Loading';
 const Login = () => {
   const auth = useAuth();
 
@@ -16,7 +16,7 @@ const Login = () => {
   };
 
   if (auth.isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (auth.error) {
