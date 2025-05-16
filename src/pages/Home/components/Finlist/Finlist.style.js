@@ -9,7 +9,7 @@ export const ListWrapper = styled.div`
 `;
 
 export const Card = styled.div`
-  background-color: #ffffff;
+  background-color: #fafafa;
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);

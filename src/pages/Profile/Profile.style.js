@@ -4,27 +4,18 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 1rem;
-  background-color: #fef3e6;
-  height: 100vh;
-`;
-
-export const Logo = styled.div`
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #8b6243;
-  margin-bottom: 2rem;
+  padding: 3rem 1rem;
 `;
 
 export const AvatarWrapper = styled.div`
   background-color: #fff;
   border-radius: 50%;
-  width: 64px;
+  width: 50px;
   height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 `;
 
 export const AvatarIcon = styled.div`
@@ -38,13 +29,15 @@ export const Card = styled.div`
   width: 100%;
   max-width: 300px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-  margin-bottom: 2rem;
+  margin-bottom: 5rem;
 `;
 
 export const UserName = styled.div`
-  font-size: 1rem;
-  font-weight: 700;
-  color: #222;
+  strong {
+    font-weight: bold;
+  }
+  font-size: 1.5rem;
+  color: #000;
 `;
 
 export const Divider = styled.hr`
@@ -67,7 +60,7 @@ export const TagWrapper = styled.div`
 
 export const Tag = styled.div`
   background-color: #8b6243;
-  color: white;
+  color: #fafafa;
   font-size: 0.75rem;
   padding: 4px 10px;
   border-radius: 10px;
@@ -79,6 +72,7 @@ export const LogoutButton = styled.button`
   border: none;
   border-radius: 10px;
   padding: 10px 40px;
+  font-weight: bold;
   font-size: 0.875rem;
   cursor: pointer;
 `;

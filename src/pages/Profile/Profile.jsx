@@ -1,4 +1,5 @@
 import React from 'react';
+import Person from '../../assets/Images/person.svg';
 import * as S from './Profile.style';
 
 const Profile = () => {
@@ -12,10 +13,8 @@ const Profile = () => {
 
   return (
     <S.Container>
-      <S.Logo>FinTori</S.Logo>
-
       <S.AvatarWrapper>
-        <S.AvatarIcon>👤</S.AvatarIcon>
+        <img src={Person}></img>
       </S.AvatarWrapper>
 
       <S.Card>
