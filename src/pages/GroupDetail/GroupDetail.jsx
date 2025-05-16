@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import SelectTab from "./SelectTab/SelectTab";
 import {
   Container,
@@ -23,54 +24,95 @@ import CustomCalendar from "./Calendar/Calendar";
 import InviteCodeModal from "../../assets/CommonComponents/InviteCodeModal/InviteCodeModal";
 
 const GroupDetail = () => {
+  const { roomId } = useParams();
+  const actualRoomId = roomId ?? "17";
+
   const [selectedTab, setSelectedTab] = useState("진행도");
   const [challenge, setChallenge] = useState(null);
   const [friends, setFriends] = useState([]);
   const [calendar, setCalendar] = useState(null);
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  const [inviteCode, setInviteCode] = useState("");
 
-  const [animatedProgress, setAnimatedProgress] = useState(0); // 내 progress 애니메이션
-  const [animatedFriendProgress, setAnimatedFriendProgress] = useState([]); // 친구들 progress 애니메이션
+  const [animatedProgress, setAnimatedProgress] = useState(0);
+  const [animatedFriendProgress, setAnimatedFriendProgress] = useState([]);
 
-  const handleInviteButton = () => {
-    setIsInviteModalOpen(true);
-  };
+  const handleModalSkip = () => setIsInviteModalOpen(false);
 
-  const handleModalSkip = () => {
-    setIsInviteModalOpen(false);
+  const fetchInviteCode = async () => {
+    const accessToken = localStorage.getItem("access_token");
+    if (!accessToken) return;
+
+    try {
+      const res = await fetch(
+        `https://fintory.coldot.kr/myChallenges/${actualRoomId}/invite`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error(
+          `초대 코드 오류: ${res.status} ${res.statusText}\n${errorText}`
+        );
+        return;
+      }
+
+      const data = await res.json();
+      console.log("초대 코드 응답:", data);
+      setInviteCode(data.invitedCode ?? ""); // 주의: invitedCode임
+      setIsInviteModalOpen(true);
+    } catch (error) {
+      console.error("초대 코드 요청 실패:", error);
+    }
   };
 
   useEffect(() => {
-    // 모의 데이터
-    const mockChallenge = {
-      title: "1주일 야식 참기 챌린지",
-      status: "진행중",
-      content:
-        "4월 카드 거래내역에 야식 관련 결제가 전월 대비 2배 급증했어요. 1주일 간 야식을 참으면, 편의점 2,000원 할인 쿠폰을 제공해드려요!",
-      start: "2025-05-13",
-      end: "2025-05-19",
-      progress: 65,
+    const fetchData = async () => {
+      const accessToken = localStorage.getItem("access_token");
+      if (!accessToken) return;
+
+      try {
+        const [challengeRes, progressRes, calendarRes] = await Promise.all([
+          fetch(`https://fintory.coldot.kr/myChallenges/${actualRoomId}`, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }),
+          fetch(
+            `https://fintory.coldot.kr/myChallenges/${actualRoomId}/progress`,
+            { headers: { Authorization: `Bearer ${accessToken}` } }
+          ),
+          fetch(
+            `https://fintory.coldot.kr/myChallenges/${actualRoomId}/calendar`,
+            { headers: { Authorization: `Bearer ${accessToken}` } }
+          ),
+        ]);
+
+        const challengeData = await challengeRes.json();
+        const progressData = await progressRes.json();
+        const calendarData = await calendarRes.json();
+
+        setChallenge(challengeData);
+        setFriends(progressData.friends);
+        setCalendar({
+          year: new Date().getFullYear(),
+          month: new Date().getMonth() + 1,
+          days: calendarData.days.map((d) => ({
+            day: new Date(d.date).getDate(),
+            isDone: d.isDone,
+          })),
+        });
+
+        setAnimatedFriendProgress(progressData.friends.map(() => 0));
+      } catch (err) {
+        console.error("데이터를 불러오는데 실패했습니다:", err);
+      }
     };
 
-    const mockFriends = [
-      { friendId: "1", friendName: "김광운", progress: 65 },
-      { friendId: "2", friendName: "이수민", progress: 80 },
-    ];
-
-    setChallenge(mockChallenge);
-    setFriends(mockFriends);
-    setCalendar({
-      year: 2025,
-      month: 5,
-      days: Array.from({ length: 31 }, (_, i) => ({
-        day: i + 1,
-        isDone: Math.random() > 0.5,
-      })),
-    });
-
-    // 친구 progress 초기화
-    setAnimatedFriendProgress(mockFriends.map(() => 0));
-  }, []);
+    fetchData();
+  }, [roomId]);
 
   useEffect(() => {
     if (challenge?.progress) {
@@ -90,9 +132,7 @@ const GroupDetail = () => {
     }
   }, [friends]);
 
-  if (!challenge || !calendar) {
-    return <Container>Loading…</Container>;
-  }
+  if (!challenge || !calendar) return <Container>Loading…</Container>;
 
   return (
     <Container>
@@ -100,17 +140,18 @@ const GroupDetail = () => {
         <Title>{challenge.title}</Title>
         <StatusBadge>{challenge.status}</StatusBadge>
       </HeaderContainer>
+
       <Content>{challenge.content}</Content>
+
       <Meta>
         <div>시작 날짜: {new Date(challenge.start).toLocaleDateString()}</div>
         <GoalRow>
           <div>종료 날짜: {new Date(challenge.end).toLocaleDateString()}</div>
-          <InviteButton onClick={handleInviteButton}>
-            친구 초대하기
-          </InviteButton>
+          <InviteButton onClick={fetchInviteCode}>친구 초대하기</InviteButton>
         </GoalRow>
         {isInviteModalOpen && (
           <InviteCodeModal
+            inviteCode={inviteCode}
             onSubmit={() => setIsInviteModalOpen(false)}
             onSkip={handleModalSkip}
           />
@@ -142,7 +183,7 @@ const GroupDetail = () => {
           </FriendList>
         </FriendsSection>
       ) : (
-        <CustomCalendar />
+        <CustomCalendar calendar={calendar} />
       )}
     </Container>
   );

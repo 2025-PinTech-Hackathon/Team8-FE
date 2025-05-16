@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   HeaderText,
@@ -14,26 +15,79 @@ import {
   SubmitButton,
 } from "./Register.style";
 
+const INTEREST_OPTIONS = [
+  "장학금",
+  "주거지원",
+  "청년주거",
+  "신혼부부",
+  "여행",
+  "세금",
+  "취업지원",
+  "보험",
+  "노후",
+  "분양정보",
+];
+
 const Register = () => {
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [ageRange, setAgeRange] = useState("");
   const [job, setJob] = useState("");
-  const [interest, setInterest] = useState("");
+  const [interests, setInterests] = useState([]);
   const [isAgreed, setIsAgreed] = useState(false);
 
-  const handleSubmit = () => {
-    alert("정보 입력 완료!");
+  const navigate = useNavigate();
+
+  const toggleInterest = (item) => {
+    setInterests((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+    );
   };
 
-  // 모든 필드가 채워졌는지 확인
   const isFormValid =
     name.trim() !== "" &&
     gender !== "" &&
     ageRange !== "" &&
     job !== "" &&
-    interest !== "" &&
+    interests.length > 0 &&
     isAgreed;
+
+  const handleSubmit = async () => {
+    const accessToken = localStorage.getItem("access_token");
+
+    if (!accessToken) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    const payload = {
+      name,
+      gender: gender === "여",
+      age_range: ageRange,
+      job,
+      interests,
+    };
+
+    try {
+      const response = await fetch("https://fintory.coldot.kr/profile/input", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) throw new Error("서버 응답 실패");
+
+      const result = await response.json();
+      alert("정보 입력 완료!");
+      navigate("/home");
+    } catch (error) {
+      console.error("제출 오류:", error);
+      alert("정보 제출 중 오류가 발생했습니다.");
+    }
+  };
 
   return (
     <Container>
@@ -105,22 +159,20 @@ const Register = () => {
       </AgeJobRow>
 
       <InterestsGroup>
-        <label>관심사</label>
-        <Select value={interest} onChange={(e) => setInterest(e.target.value)}>
-          <option value="" disabled>
-            관심사 선택
-          </option>
-          <option value="장학금">장학금</option>
-          <option value="주거지원">주거지원</option>
-          <option value="청년주거">청년주거</option>
-          <option value="신혼부부">신혼부부</option>
-          <option value="여행">여행</option>
-          <option value="세금">세금</option>
-          <option value="취업지원">취업지원</option>
-          <option value="보험">보험</option>
-          <option value="노후">노후</option>
-          <option value="분양정보">분양정보</option>
-        </Select>
+        <label>관심사 (복수 선택 가능)</label>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          {INTEREST_OPTIONS.map((item) => (
+            <label key={item} style={{ display: "flex", alignItems: "center" }}>
+              <input
+                type="checkbox"
+                checked={interests.includes(item)}
+                onChange={() => toggleInterest(item)}
+                style={{ marginRight: "4px" }}
+              />
+              {item}
+            </label>
+          ))}
+        </div>
       </InterestsGroup>
 
       <AgreementRow>
