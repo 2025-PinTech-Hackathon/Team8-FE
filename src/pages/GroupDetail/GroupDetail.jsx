@@ -7,7 +7,6 @@ import {
   Content,
   Meta,
   InviteButton,
-  GoalAmount,
   GoalRow,
   HeaderContainer,
   ProgressWrapper,
@@ -31,11 +30,11 @@ const GroupDetail = () => {
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
 
   const handleInviteButton = () => {
-    setIsInviteModalOpen(true); // 모달 열기
+    setIsInviteModalOpen(true);
   };
 
   const handleModalSkip = () => {
-    setIsInviteModalOpen(false); // 모달 닫기
+    setIsInviteModalOpen(false);
   };
 
   useEffect(() => {
@@ -47,7 +46,6 @@ const GroupDetail = () => {
         "4월 카드 거래내역에 야식 관련 결제가 전월 대비 2배 급증했어요. 1주일 간 야식을 참으면, 편의점 2,000원 할인 쿠폰을 제공해드려요!",
       start: "2025-05-13",
       end: "2025-05-19",
-      goalMoney: 70000,
       progress: 65,
     });
 
@@ -79,37 +77,28 @@ const GroupDetail = () => {
       <Content>{challenge.content}</Content>
       <Meta>
         <div>시작 날짜: {new Date(challenge.start).toLocaleDateString()}</div>
-        <div>종료 날짜: {new Date(challenge.end).toLocaleDateString()}</div>
-
         <GoalRow>
-          <div>
-            목표 금액:{" "}
-            <GoalAmount>{challenge.goalMoney.toLocaleString()}원</GoalAmount>
-          </div>
+          <div>종료 날짜: {new Date(challenge.end).toLocaleDateString()}</div>
           <InviteButton onClick={handleInviteButton}>
             친구 초대하기
           </InviteButton>
         </GoalRow>
         {isInviteModalOpen && (
           <InviteCodeModal
-            onSubmit={() => {
-              // 필요 시 제출 핸들러
-              setIsInviteModalOpen(false);
-            }}
+            onSubmit={() => setIsInviteModalOpen(false)}
             onSkip={handleModalSkip}
           />
         )}
       </Meta>
-      {/* — 나의 진행도 */}
       <ProgressWrapper>
         <ProgressBar>
           <ProgressFill progress={challenge.progress} />
         </ProgressBar>
         <ProgressText>{challenge.progress}% 달성</ProgressText>
       </ProgressWrapper>
-      {/* — 탭 (진행도 / 달력) */}
+
       <SelectTab selectedTab={selectedTab} onTabChange={setSelectedTab} />
-      {/* — 탭별 콘텐츠 */}
+
       {selectedTab === "진행도" ? (
         <FriendsSection>
           <h2>친구들 진행 현황</h2>

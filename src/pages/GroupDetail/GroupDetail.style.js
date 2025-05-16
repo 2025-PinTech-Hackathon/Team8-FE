@@ -59,13 +59,8 @@ export const InviteButton = styled.button`
   cursor: pointer;
 `;
 
-export const GoalAmount = styled.span`
-  background-color: #8b6243;
-  color: white;
-  padding: 0.1rem 0.4rem;
-  border-radius: 999rem;
-  font-size: 0.8rem;
-`;
+// ✅ 삭제됨
+// export const GoalAmount = styled.span` ... `
 
 export const ProgressWrapper = styled.div`
   margin: 0.75rem 0;
@@ -78,7 +73,10 @@ export const ProgressBar = styled.div`
   overflow: hidden;
 `;
 
-export const ProgressFill = styled.div`
+export const ProgressFill =
+  styled.div <
+  { progress: number } >
+  `
   height: 100%;
   width: ${({ progress }) => progress}%;
   background: #8b6243;
@@ -89,7 +87,6 @@ export const ProgressText = styled.div`
   margin-top: 0.5rem;
 `;
 
-/* 친구 리스트 */
 export const FriendsSection = styled.div`
   margin-top: 3rem;
 `;
@@ -118,7 +115,10 @@ export const FriendProgress = styled.div`
   overflow: hidden;
 `;
 
-export const FriendFill = styled.div`
+export const FriendFill =
+  styled.div <
+  { progress: number } >
+  `
   height: 100%;
   width: ${({ progress }) => progress}%;
   background: #8b6243;
