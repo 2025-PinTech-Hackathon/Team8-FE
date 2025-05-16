@@ -9,6 +9,7 @@ import Challenge from "./pages/Challenge/Challenge";
 import FinDetail from "./pages/FinDetail/FinDetail";
 import ChallengeDetail from "./pages/ChallengeDetail/ChallengeDetail";
 import GroupDetail from "./pages/GroupDetail/GroupDetail";
+import NoContents from "../src/assets/CommonComponents/NoContents/NoContents";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         />
         <Route path="/profile" element={<Profile />} />
         <Route path="/challenge" element={<Challenge />} />
+        <Route path="*" element={<NoContents />} />
       </Routes>
       <Navbar />
     </>
