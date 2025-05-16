@@ -4,8 +4,6 @@ export const ListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-height: 35rem;
-  overflow-y: auto;
 `;
 
 export const Card = styled.div`

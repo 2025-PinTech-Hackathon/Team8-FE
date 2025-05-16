@@ -1,20 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Person from '../../assets/Images/person.svg';
 import * as S from './Profile.style';
+import axios from 'axios';
 
 const Profile = () => {
-  const user = {
-    name: '김광운',
-    gender: '여성',
-    ageGroup: '20대',
-    status: '대학생',
-    interests: ['장학금', '장학금', '장학금', '세금', '주거지원'],
-  };
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem('access_token');
+        const response = await axios.get('https://fintory.coldot.kr/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const { name, gender, age_range, job, interests } = response.data;
+
+        setUser({
+          name,
+          gender,
+          ageGroup: age_range,
+          status: job,
+          interests,
+        });
+      } catch (error) {
+        console.error('프로필 불러오기 실패:', error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  if (!user) return <div>로딩 중...</div>;
 
   return (
     <S.Container>
       <S.AvatarWrapper>
-        <img src={Person}></img>
+        <img src={Person} alt="유저 아바타" />
       </S.AvatarWrapper>
 
       <S.Card>
@@ -26,7 +50,7 @@ const Profile = () => {
           {user.gender} / {user.ageGroup} / {user.status}
         </S.Detail>
         <S.TagWrapper>
-          {user.interests.map((tag, index) => (
+          {[...new Set(user.interests)].map((tag, index) => (
             <S.Tag key={index}>{tag}</S.Tag>
           ))}
         </S.TagWrapper>
