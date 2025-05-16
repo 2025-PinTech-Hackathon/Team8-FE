@@ -13,6 +13,7 @@ export const Card = styled.div`
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
 `;
 
 export const Title = styled.div`
