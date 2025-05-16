@@ -29,10 +29,7 @@ function App() {
             path="/home/challenge/:challengeId"
             element={<ChallengeDetail />}
           />
-          <Route
-            path="/home/challenge/:challengeId/:groupId"
-            element={<GroupDetail />}
-          />
+          <Route path="/home/challenger/:roomId" element={<GroupDetail />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/challenge" element={<Challenge />} />
           <Route path="*" element={<NoContents />} />

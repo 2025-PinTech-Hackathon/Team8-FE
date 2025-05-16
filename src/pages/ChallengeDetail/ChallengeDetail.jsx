@@ -10,52 +10,70 @@ import {
 const ChallengeDetail = () => {
   const { challengeId } = useParams();
   const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // 백엔드 준비 전까지 화면 확인용 mock 데이터
-    const mock = {
-      title: "1주일 야식 참기 챌린지",
-      content: `
-💸 1주일 야식 참기 챌린지
+    const accessToken = localStorage.getItem("access_token");
 
-“살도 빼고! 돈도 모으고!”
+    if (!accessToken) {
+      setError("로그인이 필요합니다.");
+      return;
+    }
 
-하루 1만원, 일주일이면 7만원!
-밤마다 배달앱을 켜던 손을 잠시 멈추는 것만으로,작지만 확실한 저축이 시작됩니다.
-
-챌린지 내용
-
-기간: 7일간, 밤 9시 이후 야식 금지
-목표: 야식을 참은 만큼의 금액을 따로 저금해보기
-인증 방식: 하루에 한 번! "야식 대신 저축한 금액" 인증 
-
-참여하면 이런 변화가!
-
-  ✔ 매일 1만 원씩 절약 → 일주일에 최대 7만 원 저축
-  ✔ 불필요한 지출 차단으로 소비 습관 개선
-  ✔ 내 몸과 지갑이 같이 가벼워지는 기적 ✨
-
-참여 혜택
-
-편의점 2000원 할인 쿠폰
-
-참여 방법
-
-아래 챌린지 참여하기 버튼을 눌러보세요!
-`,
-    };
-
-    setData(mock);
-
-    // 실제 API 호출
-    /*
-    fetch(`/feeds/challenge/${challengeId}`)
-      .then(res => res.json())
-      .then(json => setData(json))
-      .catch(err => console.error(err));
-    */
+    fetch(`https://fintory.coldot.kr/feed/challenge/${challengeId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("데이터 요청 실패");
+        }
+        return res.json();
+      })
+      .then((json) => {
+        setData(json);
+      })
+      .catch((err) => {
+        console.error("불러오기 실패:", err);
+        setError("정보를 불러오는 데 실패했습니다.");
+      });
   }, [challengeId]);
 
+  const handleJoinChallenge = async () => {
+    const accessToken = localStorage.getItem("access_token");
+
+    if (!accessToken) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `https://fintory.coldot.kr/myChallenges/${challengeId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("챌린지 참여 요청 실패");
+      }
+
+      const result = await response.json();
+      console.log("참여 성공:", result);
+      alert("챌린지 참여 완료!");
+    } catch (error) {
+      console.error("참여 오류:", error);
+      alert("챌린지 참여 중 오류가 발생했습니다.");
+    }
+  };
+
+  if (error) return <Container>{error}</Container>;
   if (!data) return <Container>Loading…</Container>;
 
   const { title, content } = data;
@@ -64,7 +82,7 @@ const ChallengeDetail = () => {
     <Container>
       <Title>{title}</Title>
       <Content>{content}</Content>
-      <FooterButton href="#">챌린지 참여하기</FooterButton>
+      <FooterButton onClick={handleJoinChallenge}>챌린지 참여하기</FooterButton>
     </Container>
   );
 };

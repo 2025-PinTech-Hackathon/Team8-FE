@@ -11,14 +11,18 @@ export const CalendarWrapper = styled.div`
     font-size: 1.2rem;
   }
 
-  /* 선택된 날짜 */
   .react-calendar__tile--active {
     color: white;
   }
 
-  /* 오늘 날짜 */
   .react-calendar__tile--now {
     background: #f5f5f5;
     font-weight: bold;
+  }
+
+  .done-day {
+    background-color: #a0522d !important;
+    color: white;
+    border-radius: 50%;
   }
 `;

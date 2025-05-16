@@ -3,16 +3,17 @@ import styled from "styled-components";
 export const Container = styled.div`
   max-width: 30rem;
   margin: 0 auto;
-  padding: 1rem; /* 16px */
+  padding: 1rem;
   color: black;
   height: 100vh;
+  width: 95%;
 `;
 
 export const Title = styled.h1`
   font-size: 1.25rem;
   font-weight: 700;
   flex: 1;
-  margin-top: -2rem;
+  margin-top: -1rem;
   text-align: center;
 `;
 
