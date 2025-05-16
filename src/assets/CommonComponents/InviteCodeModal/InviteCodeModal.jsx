@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
-import toriLogo from '../../../assets/Images/toriLogo.svg';
-import * as S from './InviteCodeModal.style';
+// InviteCodeModal.jsx
+import React from "react";
+import toriLogo from "../../../assets/Images/toriLogo.svg";
+import * as S from "./InviteCodeModal.style";
 
-const InviteCodeModal = ({ onSubmit, onSkip }) => {
-  const [inviteCode, setInviteCode] = useState('858800'); // ✅ 더미 코드
-
+const InviteCodeModal = ({ inviteCode, onSubmit, onSkip }) => {
   return (
     <S.ModalOverlay>
       <S.ModalWrapper>
         <S.Title>
-          초대코드 입력{' '}
+          초대코드 입력{" "}
           <img
             src={toriLogo}
             alt="도토리"
             style={{
-              height: '1.5rem',
-              marginLeft: '0.7rem',
-              verticalAlign: 'text-bottom',
+              height: "1.5rem",
+              marginLeft: "0.7rem",
+              verticalAlign: "text-bottom",
             }}
           />
         </S.Title>
@@ -36,17 +35,19 @@ const InviteCodeModal = ({ onSubmit, onSkip }) => {
         </S.BulletList>
         <S.CodeInputContainer>
           <S.InputLabel>초대 코드</S.InputLabel>
-          <S.CodeValue>{inviteCode || '858800'}</S.CodeValue>
+          <S.CodeValue>{inviteCode || "불러오는 중..."}</S.CodeValue>
         </S.CodeInputContainer>
         <S.SubmitButton
           onClick={() => {
-            navigator.clipboard.writeText(inviteCode || ''); // 빈 값이면 기본코드
-            alert('초대코드가 복사되었습니다!');
+            if (inviteCode) {
+              navigator.clipboard.writeText(inviteCode);
+              alert("초대코드가 복사되었습니다!");
+            }
           }}
         >
           초대코드 복사하기
         </S.SubmitButton>
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: "center" }}>
           <S.SkipText onClick={onSkip}>혼자 할래요.</S.SkipText>
         </div>
       </S.ModalWrapper>
