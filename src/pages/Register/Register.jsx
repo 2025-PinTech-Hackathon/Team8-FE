@@ -12,23 +12,24 @@ import {
   Checkbox,
   AgreementText,
   SubmitButton,
-} from './Register.style';
-import Logo from '../../assets/Images/Logo.svg';
+} from "./Register.style";
+import Logo from "../../assets/Images/Logo.svg";
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [gender, setGender] = useState('');
-  const [ageRange, setAgeRange] = useState('');
-  const [job, setJob] = useState('');
-  const [interest, setInterest] = useState('');
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
+  const [ageRange, setAgeRange] = useState("");
+  const [job, setJob] = useState("");
+  const [interest, setInterest] = useState("");
   const [isAgreed, setIsAgreed] = useState(false);
 
   const handleSubmit = () => {
-    alert('정보 입력 완료!');
+    alert("정보 입력 완료!");
   };
 
   // 모든 필드가 채워졌는지 확인
   const isFormValid =
+
     name.trim() !== '' &&
     gender !== '' &&
     ageRange !== '' &&
