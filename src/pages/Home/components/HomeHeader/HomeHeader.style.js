@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.div`
-  margin: 0 1.625rem; /* 26px */
   margin-top: 10px;
 `;
 
