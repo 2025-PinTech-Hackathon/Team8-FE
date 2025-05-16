@@ -29,6 +29,9 @@ const GroupDetail = () => {
   const [calendar, setCalendar] = useState(null);
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
 
+  const [animatedProgress, setAnimatedProgress] = useState(0); // 내 progress 애니메이션
+  const [animatedFriendProgress, setAnimatedFriendProgress] = useState([]); // 친구들 progress 애니메이션
+
   const handleInviteButton = () => {
     setIsInviteModalOpen(true);
   };
@@ -38,8 +41,8 @@ const GroupDetail = () => {
   };
 
   useEffect(() => {
-    // Mock 데이터
-    setChallenge({
+    // 모의 데이터
+    const mockChallenge = {
       title: "1주일 야식 참기 챌린지",
       status: "진행중",
       content:
@@ -47,13 +50,15 @@ const GroupDetail = () => {
       start: "2025-05-13",
       end: "2025-05-19",
       progress: 65,
-    });
+    };
 
-    setFriends([
+    const mockFriends = [
       { friendId: "1", friendName: "김광운", progress: 65 },
       { friendId: "2", friendName: "이수민", progress: 80 },
-    ]);
+    ];
 
+    setChallenge(mockChallenge);
+    setFriends(mockFriends);
     setCalendar({
       year: 2025,
       month: 5,
@@ -62,7 +67,28 @@ const GroupDetail = () => {
         isDone: Math.random() > 0.5,
       })),
     });
+
+    // 친구 progress 초기화
+    setAnimatedFriendProgress(mockFriends.map(() => 0));
   }, []);
+
+  useEffect(() => {
+    if (challenge?.progress) {
+      const timer = setTimeout(() => {
+        setAnimatedProgress(challenge.progress);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [challenge]);
+
+  useEffect(() => {
+    if (friends.length > 0) {
+      const timer = setTimeout(() => {
+        setAnimatedFriendProgress(friends.map((f) => f.progress));
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [friends]);
 
   if (!challenge || !calendar) {
     return <Container>Loading…</Container>;
@@ -90,11 +116,12 @@ const GroupDetail = () => {
           />
         )}
       </Meta>
+
       <ProgressWrapper>
         <ProgressBar>
-          <ProgressFill progress={challenge.progress} />
+          <ProgressFill progress={animatedProgress} />
         </ProgressBar>
-        <ProgressText>{challenge.progress}% 달성</ProgressText>
+        <ProgressText>{animatedProgress}% 달성</ProgressText>
       </ProgressWrapper>
 
       <SelectTab selectedTab={selectedTab} onTabChange={setSelectedTab} />
@@ -103,13 +130,13 @@ const GroupDetail = () => {
         <FriendsSection>
           <h2>친구들 진행 현황</h2>
           <FriendList>
-            {friends.map((f) => (
+            {friends.map((f, index) => (
               <FriendItem key={f.friendId}>
                 <span>{f.friendName}</span>
                 <FriendProgress>
-                  <FriendFill progress={f.progress} />
+                  <FriendFill progress={animatedFriendProgress[index]} />
                 </FriendProgress>
-                <small>{f.progress}%</small>
+                <small>{animatedFriendProgress[index]}%</small>
               </FriendItem>
             ))}
           </FriendList>

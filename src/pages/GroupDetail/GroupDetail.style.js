@@ -74,6 +74,8 @@ export const ProgressFill = styled.div`
   height: 100%;
   width: ${({ progress }) => progress}%;
   background: #8b6243;
+  border-radius: 999rem;
+  transition: width 0.6s ease-in-out;
 `;
 
 export const ProgressText = styled.div`
@@ -113,4 +115,6 @@ export const FriendFill = styled.div`
   height: 100%;
   width: ${({ progress }) => progress}%;
   background: #8b6243;
+  border-radius: 999rem;
+  transition: width 0.6s ease-in-out;
 `;
