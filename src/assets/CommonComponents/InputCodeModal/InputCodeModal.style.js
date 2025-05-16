@@ -69,7 +69,7 @@ export const InputLabel = styled.div`
 
 export const CodeInput = styled.input`
   width: 100%;
-  padding: 1rem;
+  padding: 0.5rem;
   font-size: 1.5rem;
   font-weight: bold;
   border: none;

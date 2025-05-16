@@ -24,6 +24,7 @@ const InputCodeModal = ({ onSubmit, onSkip }) => {
             style={{
               height: '1.5rem',
               marginLeft: '0.5rem',
+              transform: 'translateY(3px)',
             }}
           />
         </S.Title>
