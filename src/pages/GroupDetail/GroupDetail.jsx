@@ -6,7 +6,9 @@ import {
   StatusBadge,
   Content,
   Meta,
+  InviteButton,
   GoalAmount,
+  GoalRow,
   HeaderContainer,
   ProgressWrapper,
   ProgressBar,
@@ -19,12 +21,22 @@ import {
   FriendFill,
 } from "./GroupDetail.style";
 import CustomCalendar from "./Calendar/Calendar";
+import InviteCodeModal from "../../assets/CommonComponents/InviteCodeModal/InviteCodeModal";
 
 const GroupDetail = () => {
   const [selectedTab, setSelectedTab] = useState("진행도");
   const [challenge, setChallenge] = useState(null);
   const [friends, setFriends] = useState([]);
   const [calendar, setCalendar] = useState(null);
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+
+  const handleInviteButton = () => {
+    setIsInviteModalOpen(true); // 모달 열기
+  };
+
+  const handleModalSkip = () => {
+    setIsInviteModalOpen(false); // 모달 닫기
+  };
 
   useEffect(() => {
     // Mock 데이터
@@ -65,16 +77,29 @@ const GroupDetail = () => {
         <StatusBadge>{challenge.status}</StatusBadge>
       </HeaderContainer>
       <Content>{challenge.content}</Content>
-
       <Meta>
         <div>시작 날짜: {new Date(challenge.start).toLocaleDateString()}</div>
         <div>종료 날짜: {new Date(challenge.end).toLocaleDateString()}</div>
-        <div>
-          목표 금액:{" "}
-          <GoalAmount>{challenge.goalMoney.toLocaleString()}원 </GoalAmount>
-        </div>
-      </Meta>
 
+        <GoalRow>
+          <div>
+            목표 금액:{" "}
+            <GoalAmount>{challenge.goalMoney.toLocaleString()}원</GoalAmount>
+          </div>
+          <InviteButton onClick={handleInviteButton}>
+            친구 초대하기
+          </InviteButton>
+        </GoalRow>
+        {isInviteModalOpen && (
+          <InviteCodeModal
+            onSubmit={() => {
+              // 필요 시 제출 핸들러
+              setIsInviteModalOpen(false);
+            }}
+            onSkip={handleModalSkip}
+          />
+        )}
+      </Meta>
       {/* — 나의 진행도 */}
       <ProgressWrapper>
         <ProgressBar>
@@ -82,10 +107,8 @@ const GroupDetail = () => {
         </ProgressBar>
         <ProgressText>{challenge.progress}% 달성</ProgressText>
       </ProgressWrapper>
-
       {/* — 탭 (진행도 / 달력) */}
       <SelectTab selectedTab={selectedTab} onTabChange={setSelectedTab} />
-
       {/* — 탭별 콘텐츠 */}
       {selectedTab === "진행도" ? (
         <FriendsSection>

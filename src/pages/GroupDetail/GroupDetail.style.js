@@ -44,6 +44,21 @@ export const Meta = styled.div`
   margin-bottom: 1.5rem;
 `;
 
+export const GoalRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const InviteButton = styled.button`
+  border: none;
+  color: white;
+  background-color: #8b6243;
+  border-radius: 999px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+`;
+
 export const GoalAmount = styled.span`
   background-color: #8b6243;
   color: white;
