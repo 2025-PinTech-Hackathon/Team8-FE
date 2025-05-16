@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ModalOverlay = styled.div`
   position: fixed;
@@ -58,7 +58,6 @@ export const CodeInputContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin 1.5rem;
 `;
 
 export const InputLabel = styled.div`
