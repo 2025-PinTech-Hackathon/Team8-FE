@@ -10,7 +10,6 @@ function Header({}) {
 
   if (pathname === '/') return null;
 
-  console.log('pathname:', pathname);
   const isDetailPage = pathname.startsWith('/home/') && pathname !== '/home';
 
   return (
