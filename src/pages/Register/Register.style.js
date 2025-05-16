@@ -20,7 +20,7 @@ export const HeaderText = styled.h2`
   font-weight: 400;
   text-align: center;
   line-height: 1.4;
-  margin: 1.5rem 0; /* 24px 0 */
+  margin: 3.5rem 0; /* 24px 0 */
   color: black;
 
   strong {
