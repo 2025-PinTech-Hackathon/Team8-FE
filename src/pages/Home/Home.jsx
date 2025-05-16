@@ -3,7 +3,7 @@ import * as S from '../Home/Home.style';
 import HomeHeader from '../Home/components/HomeHeader/HomeHeader.jsx';
 import TabData from '../Home/components/TabData/TabData.jsx';
 import Finlist from '../Home/components/Finlist/Finlist.jsx';
-import ChallengeList from '../Home/components/ChallengeList/ChallengeList.jsx';
+import ChallengeList from '../Home/components/Challengelist/Challengelist.jsx';
 
 function Home() {
   //api 연결시
