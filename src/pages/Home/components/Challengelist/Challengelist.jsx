@@ -1,35 +1,79 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from './Challengelist.style';
 import { useNavigate } from 'react-router-dom';
+import NoContents from '../../../../assets/CommonComponents/NoContents/NoContents';
+import axios from 'axios';
 
-const ChallengeList = ({ category }) => {
+const Challengelist = ({ category }) => {
   const navigate = useNavigate();
+  const [feeds, setFeeds] = useState([]);
 
-  const dummyArray = [
-    { challengeId: 1, title: '오늘의 챌린지 1' },
-    { challengeId: 2, title: '오늘의 챌린지 2' },
-    { challengeId: 3, title: '오늘의 챌린지 3' },
-  ];
+  useEffect(() => {
+    const fetchChallenges = async () => {
+      try {
+        const token = localStorage.getItem('access_token');
+        const tagMap = {
+          장학금: 'SCHOLOARSHIP',
+          주거지원: 'HOUSING_SUPPORT',
+          청년주거: 'YOUTH_HOUSING',
+          신혼부부: 'NEWLYWED',
+          여행: 'TRAVEL',
+          세금: 'TAX',
+          취업지원: 'EMPLOYMENT',
+          보험: 'INSURANCE',
+          노후: 'RETIREMENT',
+          분양정보: 'SALE_INFO',
+          소비: 'CONSUMPTION',
+          금융교육: 'FINANCIAL_EDUCATION',
+          투자: 'INVESTMENT',
+        };
+
+        const tagParam = category ? tagMap[category] || null : null;
+
+        const response = await axios.get(
+          'https://fintory.coldot.kr/main/challenge',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              tag: tagParam,
+            },
+          }
+        );
+
+        setFeeds(response.data.challenges);
+      } catch (error) {
+        console.error('챌린지 목록 불러오기 실패:', error);
+      }
+    };
+
+    fetchChallenges();
+  }, [category]);
 
   return (
     <S.ListWrapper>
-      {dummyArray.map((item) => (
-        <S.Card
-          key={item.challengeId}
-          onClick={() => navigate(`/home/challenge/${item.challengeId}`)}
-        >
-          <S.Title>{item.title}</S.Title>
-          <S.Description>
-            하루에 1가지 목표를 달성하면 포인트가 지급돼요! 챌린지에
-            도전해보세요 💪
-          </S.Description>
-          <S.ButtonWrapper>
-            <S.DetailButton>{category ? category : ''}</S.DetailButton>
-          </S.ButtonWrapper>
-        </S.Card>
-      ))}
+      {feeds.length === 0 ? (
+        <NoContents />
+      ) : (
+        feeds &&
+        feeds.map((item) => (
+          <S.Card
+            key={item.challengeId}
+            onClick={() => navigate(`/home/challenge/${item.challengeId}`)}
+          >
+            <S.Title>{item.title}</S.Title>
+            <S.Description>{item.description}</S.Description>
+            <S.ButtonWrapper>
+              <S.DetailButton>
+                {item.tag || category || '자세히'}
+              </S.DetailButton>
+            </S.ButtonWrapper>
+          </S.Card>
+        ))
+      )}
     </S.ListWrapper>
   );
 };
 
-export default ChallengeList;
+export default Challengelist;
