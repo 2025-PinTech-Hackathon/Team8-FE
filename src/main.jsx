@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "react-oidc-context";
-import "./index.css";
 
 const cognitoAuthConfig = {
   authority:
