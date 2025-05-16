@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import GlobalStyle from './styles/GlobalStyle';
+import Header from './assets/CommonComponents/Header/Header';
 import Register from './pages/Register/Register';
 import Home from './pages/Home/Home';
 import Profile from './pages/Profile/Profile';
@@ -12,15 +13,17 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Routes>
-        <Route path="/register" element={<Register />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/home/:finId" element={<FinDetail />} />
-        <Route path="/home/:challengeId" element={<ChallengeDetail />} />
-        <Route path="/home/:challengeId/:groupId" element={<GroupDetail />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/challenge" element={<Challenge />} />
-      </Routes>
+      <Header>
+        <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/home/:finId" element={<FinDetail />} />
+          <Route path="/home/:challengeId" element={<ChallengeDetail />} />
+          <Route path="/home/:challengeId/:groupId" element={<GroupDetail />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/challenge" element={<Challenge />} />
+        </Routes>
+      </Header>
     </>
   );
 }
