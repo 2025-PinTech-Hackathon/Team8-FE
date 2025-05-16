@@ -4,7 +4,7 @@ export const ListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-height: 450px; // or 100%, 80vh 등
+  max-height: 35rem;
   overflow-y: auto;
 `;
 
