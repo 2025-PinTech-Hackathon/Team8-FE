@@ -34,7 +34,7 @@ export const Meta = styled.div`
 
 export const Content = styled.div`
   white-space: pre-wrap;
-  background-color: #fafafa;
+  background-color: #ffffff;
   border-radius: 15px;
   padding: 0 1rem;
   font-size: 0.875rem;
