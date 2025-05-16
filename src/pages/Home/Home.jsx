@@ -36,7 +36,7 @@ function Home() {
         });
 
         setUserName(response.data.name);
-        setCategoryTabs(response.data.interests); // ✅ interests로 탭 구성
+        setCategoryTabs(response.data.interests);
       } catch (error) {
         console.error('프로필 불러오기 실패:', error);
       }
