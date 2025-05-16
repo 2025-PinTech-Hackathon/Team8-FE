@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.div`
-  margin: 1.625rem; /* 26px */
+  margin-left: 1.625rem; /* 26px */
+  margin-top: 1.625rem; /* 26px */
 `;
 
 export const LogoArea = styled.div``;
