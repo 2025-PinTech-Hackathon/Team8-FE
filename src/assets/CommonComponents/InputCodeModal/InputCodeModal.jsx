@@ -1,18 +1,42 @@
 import React, { useState } from 'react';
 import toriLogo from '../../../assets/Images/toriLogo.svg';
 import * as S from './InputCodeModal.style';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const InputCodeModal = ({ onSubmit, onSkip }) => {
+  const navigate = useNavigate();
   const [inviteCode, setInviteCode] = useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (inviteCode.trim() === '') {
       alert('초대 코드를 입력해주세요.');
       return;
     }
-    onSubmit(inviteCode);
+    try {
+      const token = localStorage.getItem('access_token');
+      const response = await axios.post(
+        'https://fintory.coldot.kr/myChallenge/participate',
+        {
+          code: inviteCode,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data);
+      const { roomId } = response.data;
+      navigate(`/home/challenger/${roomId}`);
+    } catch (error) {
+      if (error.response?.data?.detail) {
+        alert(error.response.data.detail);
+      } else {
+        alert('참여에 실패했습니다.');
+      }
+    }
   };
-
   return (
     <S.ModalOverlay>
       <S.ModalWrapper>
@@ -50,7 +74,7 @@ const InputCodeModal = ({ onSubmit, onSkip }) => {
             maxLength={6}
           />
         </S.CodeInputContainer>
-        <S.SubmitButton>입력하기</S.SubmitButton>
+        <S.SubmitButton onClick={handleSubmit}>입력하기</S.SubmitButton>
         <div style={{ textAlign: 'center' }}>
           <S.SkipText onClick={onSkip}>혼자 할래요.</S.SkipText>
         </div>
